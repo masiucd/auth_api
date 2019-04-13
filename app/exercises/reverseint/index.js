@@ -18,8 +18,4 @@ function reverseInt(n) {
   return parseInt(reversed) * Math.sign(n);
 }
 
-console.log(reverseInt(21));
-console.log(reverseInt(12));
-console.log(reverseInt(-91));
-
 module.exports = reverseInt;
