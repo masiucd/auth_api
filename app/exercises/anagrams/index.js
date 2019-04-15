@@ -57,4 +57,17 @@ function anagrams3(str1, str2) {
   return bubbleSort(str1) === bubbleSort(str2);
 }
 
+function test(s1, s2) {
+  function checkAnagram(str) {
+    const mapChar = {};
+    for (const char of str.replace(/[^\w]/g, '').toLowerCase()) {
+      mapChar[char] = mapChar[char] + 1 || 1;
+    }
+    return mapChar;
+  }
+  const str1 = checkAnagram(s1);
+  const str2 = checkAnagram(s2);
+  return Object.keys(str1).length === Object.keys(str2).length;
+}
+
 module.exports = anagrams;
