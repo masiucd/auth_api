@@ -27,8 +27,4 @@ function capitalize3(str) {
   return str.replace(/\b[a-z]/gi, char => char.toUpperCase());
 }
 
-console.log(capitalize3('a short sentence'));
-console.log(capitalize3('a lazy fox'));
-console.log(capitalize3('look, it is working!'));
-
 module.exports = capitalize;

@@ -30,7 +30,5 @@ function steps(n) {
     console.log(space);
   }
 }
-console.log(steps(5));
-console.log(steps(2));
 
 module.exports = steps;
