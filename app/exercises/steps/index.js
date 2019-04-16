@@ -31,4 +31,21 @@ function steps(n) {
   }
 }
 
+function steps2(n, row = 0, stair = '') {
+  if (n === row) {
+    return;
+  }
+
+  if (n === stair.length) {
+    console.log(stair);
+    return steps2(n, row + 1);
+  }
+  if (stair.length <= row) {
+    stair += '#';
+  } else {
+    stair += ' ';
+  }
+  steps2(n, row, stair);
+}
+
 module.exports = steps;
