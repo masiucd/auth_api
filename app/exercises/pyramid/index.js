@@ -50,5 +50,24 @@ function pyramid(n, row = 0, level = '') {
   pyramid(n, row, level + add);
 }
 
-console.log(pyramid(5));
+function test(n, row = 0, steps = '') {
+  if (row === n) {
+    return;
+  }
+  if (steps.length === n * 2 - 1) {
+    console.log(steps);
+    return test(n, row + 1);
+  }
+  const middle = Math.floor((n * 2 - 1) / 2);
+  let add;
+  if (middle - row < steps.length && middle + row > steps.length) {
+    add = '#';
+  } else {
+    add = ' ';
+  }
+  test(n, row, steps + add);
+}
+
+console.log(test(10));
+
 module.exports = pyramid;
