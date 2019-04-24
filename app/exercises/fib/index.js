@@ -18,11 +18,36 @@
 //   return res[n];
 //   // return res[res.length - 1];
 // }
+
+// function fib(n) {
+//   if (n < 2) {
+//     return n;
+//   }
+//   return fib(n - 1) + fib(n - 2);
+// }
+
+// fib with memoazation
+function memoize(fn) {
+  // a record for all previous call of this function, and wait for the results
+  const cashe = {};
+  return function(...args) {
+    if (cashe[args]) {
+      // if we ever called this fn with this type of args before then just return it
+      // avoiding calling the function again with the same value every time
+      return cashe[args];
+    }
+    const res = fn.apply(this, args);
+    cashe[args] = res;
+
+    return res;
+  };
+}
 function fib(n) {
   if (n < 2) {
     return n;
   }
   return fib(n - 1) + fib(n - 2);
 }
+fib = memoize(fib);
 
 module.exports = fib;
