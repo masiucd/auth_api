@@ -1,7 +1,3 @@
-// --- Directions
-// Implement classes Node and Linked Lists
-// See 'directions' document
-
 class Node {
   constructor(data, next) {
     this.data = data;
@@ -44,10 +40,10 @@ class LinkedList {
   }
 }
 
-const myLinkedList = new LinkedList();
-myLinkedList.head = new Node(4);
-myLinkedList.insertFirst(7);
-myLinkedList.insertFirst(12);
-console.log(myLinkedList.getLast());
+const list = new LinkedList();
+list.head = new Node(4);
+list.insertFirst(5);
+list.insertFirst(8);
+list.insertFirst(12);
 
-module.exports = { Node, LinkedList };
+console.log(list.getLast());
