@@ -42,12 +42,41 @@ class LinkedList {
       node = node.next;
     }
   }
+
+  clear() {
+    this.head = null;
+  }
+
+  removeFirst() {
+    if (!this.head) {
+      return;
+    }
+    this.head = this.head.next;
+  }
+
+  removeLast() {
+    // if htere is nothing in the list then just retur
+    if (!this.head) return;
+    // if there is only one value then remove
+    if (!this.head.next) {
+      this.head = null;
+    }
+    let previous = this.head;
+    let node = this.head.next;
+    while (node.next) {
+      previous = node;
+      node = node.next;
+    }
+    previous.next = null;
+  }
 }
 
 const myLinkedList = new LinkedList();
 myLinkedList.head = new Node(4);
 myLinkedList.insertFirst(7);
 myLinkedList.insertFirst(12);
-console.log(myLinkedList.getLast());
+// myLinkedList.clear();
+
+console.log(myLinkedList);
 
 module.exports = { Node, LinkedList };
