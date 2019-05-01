@@ -6,7 +6,7 @@ class Node {
 }
 
 class LinkedList {
-  constructor(head) {
+  constructor() {
     this.head = null;
   }
 
@@ -29,7 +29,9 @@ class LinkedList {
   }
 
   getLast() {
-    if (!this.head) return null;
+    if (!this.head) {
+      return null;
+    }
     let node = this.head;
     while (node) {
       if (!node.next) {
@@ -44,9 +46,7 @@ class LinkedList {
   }
 
   removeFirst() {
-    if (!this.head) {
-      return;
-    }
+    if (!this.head) return;
     this.head = this.head.next;
   }
 
@@ -66,18 +66,12 @@ class LinkedList {
 
   insertLast(data) {
     const last = this.getLast();
+    // check to se if their is any node existing in the chain
     if (last) {
       last.next = new Node(data);
     } else {
+      // chain is empty
       this.head = new Node(data);
     }
   }
 }
-
-const list = new LinkedList();
-list.head = new Node(4);
-list.insertFirst(5);
-list.insertFirst(8);
-list.insertFirst(12);
-
-console.log(list.getLast());
