@@ -89,6 +89,19 @@ class LinkedList {
     }
     return null;
   }
+
+  removeAt(index) {
+    if (!this.head) return;
+    if (index === 0) {
+      this.head = this.head.next;
+      return;
+    }
+    const previous = this.getAt(index - 1);
+    if (!previous || !previous.next) {
+      return;
+    }
+    previous.next = previous.next.next;
+  }
 }
 
 const myLinkedList = new LinkedList();
@@ -97,6 +110,8 @@ myLinkedList.insertFirst(7);
 myLinkedList.insertFirst(12);
 // myLinkedList.clear();
 
-console.log(myLinkedList);
+// console.log(myLinkedList.size());
+console.log(myLinkedList.removeAt(1));
+// console.log(myLinkedList.size());
 
 module.exports = { Node, LinkedList };
