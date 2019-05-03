@@ -16,6 +16,7 @@ class LinkedList {
 
   insertFirst(data) {
     this.head = new Node(data, this.head);
+    // this.insertAt(0)
   }
 
   size() {
@@ -41,6 +42,8 @@ class LinkedList {
       }
       node = node.next;
     }
+
+    // return this.getAt(this.size() - 1)
   }
 
   clear() {
@@ -101,6 +104,18 @@ class LinkedList {
       return;
     }
     previous.next = previous.next.next;
+  }
+
+  insertAt(data, index) {
+    if (this.head) {
+      this.head = new Node(data);
+    }
+    if (index === 0) {
+      this.head = new Node(data, this.head);
+    }
+    const previous = this.getAt(index - 1) || this.getLast();
+    const node = new Node(data, previous.next);
+    previous.next = node;
   }
 }
 
