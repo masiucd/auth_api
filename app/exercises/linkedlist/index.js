@@ -1,7 +1,3 @@
-// --- Directions
-// Implement classes Node and Linked Lists
-// See 'directions' document
-
 class Node {
   constructor(data, next) {
     this.data = data;
@@ -10,13 +6,12 @@ class Node {
 }
 
 class LinkedList {
-  constructor(head) {
+  constructor() {
     this.head = null;
   }
 
   insertFirst(data) {
     this.head = new Node(data, this.head);
-    // this.insertAt(0)
   }
 
   size() {
@@ -37,13 +32,9 @@ class LinkedList {
     if (!this.head) return null;
     let node = this.head;
     while (node) {
-      if (!node.next) {
-        return node;
-      }
+      if (!node.next) return node;
       node = node.next;
     }
-
-    // return this.getAt(this.size() - 1)
   }
 
   clear() {
@@ -51,22 +42,18 @@ class LinkedList {
   }
 
   removeFirst() {
-    if (!this.head) {
-      return;
-    }
+    if (!this.head) return;
     this.head = this.head.next;
   }
 
   removeLast() {
-    // if htere is nothing in the list then just retur
     if (!this.head) return;
-    // if there is only one value then remove
     if (!this.head.next) {
       this.head = null;
     }
     let previous = this.head;
     let node = this.head.next;
-    while (node.next) {
+    while (node) {
       previous = node;
       node = node.next;
     }
@@ -97,17 +84,16 @@ class LinkedList {
     if (!this.head) return;
     if (index === 0) {
       this.head = this.head.next;
-      return;
     }
     const previous = this.getAt(index - 1);
     if (!previous || !previous.next) {
       return;
     }
-    previous.next = previous.next.next;
+    return (previous.next = previous.next.next);
   }
 
   insertAt(data, index) {
-    if (this.head) {
+    if (!this.head) {
       this.head = new Node(data);
     }
     if (index === 0) {
@@ -119,14 +105,8 @@ class LinkedList {
   }
 }
 
-const myLinkedList = new LinkedList();
-myLinkedList.head = new Node(4);
-myLinkedList.insertFirst(7);
-myLinkedList.insertFirst(12);
-// myLinkedList.clear();
+const list = new LinkedList();
+list.head = new Node(4);
+list.insertFirst(8);
 
-// console.log(myLinkedList.size());
-console.log(myLinkedList.removeAt(1));
-// console.log(myLinkedList.size());
-
-module.exports = { Node, LinkedList };
+console.log(list);
