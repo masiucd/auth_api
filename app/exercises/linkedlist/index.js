@@ -103,6 +103,14 @@ class LinkedList {
     const node = new Node(data, previous.next);
     previous.next = node;
   }
+
+  *[Symbol.iterator](){
+    let node = this.head;
+    while(node){
+      yield node
+      node = node.next;
+    }
+  }
 }
 
 const list = new LinkedList();
