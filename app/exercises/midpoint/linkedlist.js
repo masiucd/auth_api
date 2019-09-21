@@ -9,7 +9,7 @@ class LinkedList {
   constructor(values = []) {
     this.head = null;
 
-    for (let value of values) {
+    for (const value of values) {
       this.insertLast(value);
     }
   }
@@ -112,9 +112,8 @@ class LinkedList {
       if (counter === index - 1) {
         if (node.next) {
           return (node.next = node.next.next);
-        } else {
-          return (node.next = null);
         }
+        return (node.next = null);
       }
       node = node.next;
       counter++;
@@ -148,10 +147,9 @@ class LinkedList {
     if (last) {
       last.next = new Node(data);
       return last.next;
-    } else {
-      this.head = new Node(data);
-      return this.head;
     }
+    this.head = new Node(data);
+    return this.head;
   }
 
   forEach(fn) {
