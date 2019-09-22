@@ -30,4 +30,17 @@ function chunk2(array, size) {
   return chunkedArray;
 }
 
+function chunk3(array, size) {
+  const chunkedArray = [];
+  array.forEach(x => {
+    const last = chunkedArray[chunkedArray.length - 1];
+    if (!last || last.length === size) {
+      chunkedArray.push([x]);
+    } else {
+      last.push(x);
+    }
+  });
+  return chunkedArray;
+}
+
 module.exports = chunk;
