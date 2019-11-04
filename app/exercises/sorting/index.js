@@ -5,20 +5,38 @@ function bubbleSort(arr) {
   for (let i = 0; i < arr.length; i += 1) {
     for (let j = 0; j < arr.length; j += 1) {
       if (arr[j] > arr[j + 1]) {
-        const temp = arr[j];
+        const lesser = arr[j];
         arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
+        arr[j + 1] = lesser;
       }
     }
   }
   return arr;
 }
 
-function selectionSort(arr) {}
+function bubbleSort2(arr) {
+  for (let i = 0; i < arr.length; i += 1) {
+    for (let j = 0; j < arr.length - i - 1; j += 1) {
+      if (arr[j] > arr[j + 1]) {
+        const lesser = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = lesser;
+      }
+    }
+  }
+  return arr;
+}
 
-function mergeSort(arr) {}
+function selectionSort(arr) {
+  //
+}
 
-function merge(left, right) {}
+function mergeSort(arr) {
+  //
+}
 
-console.log(bubbleSort([5, 19, 3, 12, 6, 2, 9, 10, 1, 4]));
+function merge(left, right) {
+  //
+}
+
 module.exports = { bubbleSort, selectionSort, mergeSort, merge };
