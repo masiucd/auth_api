@@ -1,40 +1,33 @@
-import Fastify, {FastifyInstance, RouteShorthandOptions} from "fastify"
-
-const server: FastifyInstance = Fastify({})
+import express from "express"
 import {prisma} from "./db/db"
 
-const opts: RouteShorthandOptions = {
-  schema: {
-    response: {
-      200: {
-        type: "object",
-        properties: {
-          pong: {
-            type: "string",
-          },
-        },
-      },
-    },
-  },
-}
+const app = express()
 
-server.get("/api/shoes", opts, async (request, reply) => {
+const PORT = process.env.PORT || 3000
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+
+app.get("/api/shoes", async (_, res) => {
   const shoes = await prisma.shoe.findMany()
-  console.log({shoes})
-  return {pong: "it worked!"}
+  res.send({shoes})
 })
 
-const start = async (): Promise<void> => {
-  try {
-    await server.listen(3000)
+app.post("/api/signup", async (req, res) => {
+  const {email, password, name} = req.body
+  if (!email || !password || !name) return res.send({error: "missing fields"})
+  const user = await prisma.user.create({
+    data: {
+      email,
+      password,
+      name,
+    },
+  })
+  res.header("Content-Type", "application/json")
 
-    const address = server.server.address()
-    const port = typeof address === "string" ? address : address?.port
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(`server listening on ${port} 🚀`)
-  } catch (err) {
-    server.log.error(err)
-    process.exit(1)
-  }
-}
-void start()
+  res.send({user, message: "user created", status: 200})
+})
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT} 🚀`)
+})
