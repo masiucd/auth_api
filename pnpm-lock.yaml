@@ -4,11 +4,13 @@ specifiers:
   '@prisma/client': ^3.9.2
   '@tsconfig/node16': ^1.0.2
   '@types/bcryptjs': ^2.4.2
+  '@types/cookie-parser': ^1.4.3
   '@types/express': ^4.17.13
   '@types/node': ^17.0.25
   '@typescript-eslint/eslint-plugin': ^5.20.0
   '@typescript-eslint/parser': ^5.20.0
   bcryptjs: ^2.4.3
+  cookie-parser: ^1.4.6
   dotenv: ^16.0.0
   eslint: ^8.13.0
   eslint-config-prettier: ^8.5.0
@@ -23,12 +25,14 @@ specifiers:
 dependencies:
   '@prisma/client': 3.13.0
   bcryptjs: 2.4.3
+  cookie-parser: 1.4.6
   express: 4.18.1
   jsonwebtoken: 8.5.1
 
 devDependencies:
   '@tsconfig/node16': 1.0.2
   '@types/bcryptjs': 2.4.2
+  '@types/cookie-parser': 1.4.3
   '@types/express': 4.17.13
   '@types/node': 17.0.25
   '@typescript-eslint/eslint-plugin': 5.20.0_b9ac9b5656ce5dffade639fcf5e491bf
@@ -169,6 +173,12 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 17.0.25
+    dev: true
+
+  /@types/cookie-parser/1.4.3:
+    resolution: {integrity: sha512-CqSKwFwefj4PzZ5n/iwad/bow2hTCh0FlNAeWLtQM3JA/NX/iYagIpWG2cf1bQKQ2c9gU2log5VUCrn7LDOs0w==}
+    dependencies:
+      '@types/express': 4.17.13
     dev: true
 
   /@types/express-serve-static-core/4.17.28:
@@ -599,8 +609,21 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /cookie-parser/1.4.6:
+    resolution: {integrity: sha512-z3IzaNjdwUC2olLIB5/ITd0/setiaFMLYiZJle7xg5Fe9KWAceil7xszYfHHBtDFYLSgJduS2Ty0P1uJdPDJeA==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      cookie: 0.4.1
+      cookie-signature: 1.0.6
+    dev: false
+
   /cookie-signature/1.0.6:
     resolution: {integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=}
+    dev: false
+
+  /cookie/0.4.1:
+    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
+    engines: {node: '>= 0.6'}
     dev: false
 
   /cookie/0.5.0:

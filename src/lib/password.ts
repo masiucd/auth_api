@@ -9,4 +9,5 @@ const hashPassword = async (passwordToHash: string): Promise<string> => {
   const salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(passwordToHash, salt)
 }
+
 export {comparePassword, hashPassword}

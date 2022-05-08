@@ -1,8 +1,7 @@
 import type {Request, Response} from "express"
-import {prisma} from "../db/db"
 import {validateEmail} from "../lib/validate"
-import {hashPassword} from "../lib/password"
-import {getUsers, registerUser} from "../persistence/user"
+import {hashPassword, comparePassword} from "../lib/password"
+import {getUsers, insertNewUser, getUserByEmail} from "../persistence/user"
 
 const users = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -22,11 +21,12 @@ const register = async (req: Request, res: Response): Promise<void> => {
     const isValidEmail = validateEmail(email)
     if (!isValidEmail) res.send({error: "invalid email", status: 400})
     // check if email exists in db
-    const userByEmail = await prisma.user.findFirst({where: {email}})
-    if (userByEmail) res.send({error: "email already exists", status: 400})
+    const userByEmail = await getUserByEmail(email)
+    if (userByEmail !== null)
+      res.send({error: "email already exists", status: 400})
 
     const hashedPassword = await hashPassword(password)
-    const user = await registerUser({email, hashedPassword, name})
+    const user = await insertNewUser({email, hashedPassword, name})
 
     res.header("Content-Type", "application/json")
     res.send({user, message: "user created", status: 200})
@@ -36,4 +36,28 @@ const register = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export {users, register}
+const authorizeUser = async (req: Request, res: Response): Promise<boolean> => {
+  try {
+    const user = await getUserByEmail(req.body.email)
+    if (user === null) {
+      res.send({error: "user not found", status: 400})
+      return false
+    }
+
+    const isAuthorized = await comparePassword(req.body.password, user.password)
+    res.cookie("test-cookie", "value", {
+      maxAge: 1000 * 60 * 60,
+      httpOnly: true,
+      path: "/",
+      domain: "localhost",
+    })
+    res.send({isAuthorized, status: 200})
+    return isAuthorized
+  } catch (err) {
+    console.error(err)
+    res.send({error: "error authorize user", status: 500})
+    return false
+  }
+}
+
+export {users, register, authorizeUser}

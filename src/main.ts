@@ -1,12 +1,13 @@
 import express from "express"
 import {Routes} from "./routes"
+import cookieParser from "cookie-parser"
 
 const app = express()
-
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT ?? 3000
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+app.use(cookieParser(process.env.COOKIE_SIGNATURE ?? "dev-cookie-signature"))
 
 Routes(app)
 

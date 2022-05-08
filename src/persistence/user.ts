@@ -10,7 +10,7 @@ const getUsers = async (): Promise<User[]> => {
   }
 }
 
-const registerUser = async ({
+const insertNewUser = async ({
   email,
   hashedPassword,
   name,
@@ -33,4 +33,15 @@ const registerUser = async ({
     throw new Error("error creating user")
   }
 }
-export {getUsers, registerUser}
+
+const getUserByEmail = async (email: string): Promise<User | null> => {
+  try {
+    const user = await prisma.user.findFirst({where: {email}})
+    return user
+  } catch (error) {
+    console.error(error)
+    throw new Error("error getting user by email")
+  }
+}
+
+export {getUsers, insertNewUser, getUserByEmail}

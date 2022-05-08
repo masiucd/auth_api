@@ -3,9 +3,9 @@
 ## Table of Contents
 
 - [About](#about)
-<!-- - [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Contributing](../CONTRIBUTING.md) -->
+- [Encryption](#encryption)
+- [HTTP](#HTTP)
+- [Access Token](#access-token)
 
 ## About <a name = "about"></a>
 
@@ -54,3 +54,69 @@ Exit from bash
 ```shell
   exit
 ```
+
+### Encryption <a name = "encryption"></a>
+
+Encryption,
+Allows you to use a key to obfuscate and retrieve data
+
+password
+
+password X key
+
+qbttxpse
+
+qbttxpse / key
+
+password
+
+Hashing
+A one way trip. Not meant to be reversed
+
+password
+password x hash function
+hashed data
+
+md4, md5, sha
+Sha - security hashing algorithm
+sha-256
+
+Salt
+
+adds additional data (salt)
+
+passwordsalt
+passwordsalt x hash function
+creates a unique hash
+
+---
+
+### HTTPOnly Cookies <a name = "HTTP"></a>
+
+Local Storage and normal cookies are both
+
+- Stored in the browser
+- Accessible by the client
+- Able to be read / wrote by the browser
+- Able to be accessed by any browser extension on your browser
+
+HTTPOnly Cookies
+
+- Only accessible via the server
+- Only writeable via the server
+
+---
+
+### Access Token <a name = "access-token"></a>
+
+- JWT
+- Contains all of the info someone needs to be logged
+- Says this user has access
+- Only available current session
+
+Refresh Token
+
+- JWT
+- Only contains session id
+- Be used to generate new access token
+- Used to refresh the access token
