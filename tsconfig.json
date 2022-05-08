@@ -5,7 +5,16 @@
     "sourceMap": true,
     "strict": true,
     "lib": ["esnext", "dom"],
-    "esModuleInterop": true
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "paths": {
+      "$root": ["."],
+      "$db": ["db/*"],
+      "$controllers": ["controllers/*"],
+      "$routes": ["routes/*"],
+      "$persistence": ["persistance/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]

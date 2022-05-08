@@ -11,24 +11,27 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   email     String
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sessions  Session[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@map("users")
 }
 
-model Shoe {
-  id        Int      @id @default(autoincrement())
-  name      String
-  brand     String
-  price     Int
-  size      Int[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String
+  authId       Int
+  User         User     @relation(fields: [authId], references: [id])
+  valid        Boolean
+  userAgent    String
+  ipAddress    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  @@map("shoes")
+  @@map("sessions")
 }

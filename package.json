@@ -17,11 +17,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "_moduleAliases": {
+    "$root": ".",
+    "$db": "src/db/",
+    "$controller": "src/controller/",
+    "$routes": "src/routes/",
+    "$persistence": "src/persistance*"
+  },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.13",
+    "@types/module-alias": "^2.0.1",
     "@types/node": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
@@ -39,6 +47,7 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2"
   }
 }
