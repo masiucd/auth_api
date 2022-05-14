@@ -1,7 +1,7 @@
 import type {Request, Response} from "express"
 
 import {getUsers, insertNewUser, getUserByEmail} from "../persistence/user"
-import {validateEmail, authorize, hashPassword, loginUser} from "../biz-user"
+import {validateEmail, authorize, hashPassword, loginUser, isAuthorized} from "../biz-user"
 
 type ResponseReturnType = Promise<Response<unknown, Record<string, unknown>>>
 
@@ -9,8 +9,8 @@ const users = async (req: Request, res: Response): ResponseReturnType => {
   try {
     const users = await getUsers()
     return res.send({users, message: "users", status: 200})
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
+    console.error(error)
     return res.send({error: "error getting users", status: 500, url: req.url})
   }
 }
@@ -32,8 +32,8 @@ const register = async (req: Request, res: Response): ResponseReturnType => {
 
     res.header("Content-Type", "application/json")
     return res.send({user, message: "user created", status: 200})
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
+    console.error(error)
     return res.send({error: "error creating user", status: 500})
   }
 }
@@ -51,10 +51,23 @@ const authorizeUser = async (req: Request, res: Response): ResponseReturnType =>
       return res.send({message: "authorized", status: 200})
     }
     return res.send({message: "Not authorized", status: 401})
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
+    console.error(error)
     return res.send({error: "error authorize user", status: 500})
   }
 }
 
-export {users, register, authorizeUser}
+const profile = async (req: Request, res: Response): ResponseReturnType => {
+  try {
+    const user = await isAuthorized(req)
+    if (user) {
+      return res.send({user, message: `Welcome ${user.name}`, status: 200})
+    }
+    return res.send({message: "Cant access the profile", status: 401})
+  } catch (error) {
+    console.error(error)
+    return res.send({error: "error getting profile", status: 500})
+  }
+}
+
+export {users, register, authorizeUser, profile}

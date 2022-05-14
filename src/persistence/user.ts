@@ -1,8 +1,8 @@
 import {User} from "@prisma/client"
-import {prisma} from "../db/db"
 
 const getUsers = async (): Promise<User[]> => {
   try {
+    const {prisma} = await import("../db/db")
     return await prisma.user.findMany()
   } catch (error) {
     console.error(error)
@@ -20,6 +20,7 @@ const insertNewUser = async ({
   name: string
 }): Promise<User> => {
   try {
+    const {prisma} = await import("../db/db")
     const user = await prisma.user.create({
       data: {
         email,
@@ -36,6 +37,7 @@ const insertNewUser = async ({
 
 const getUserByEmail = async (email: string): Promise<User | null> => {
   try {
+    const {prisma} = await import("../db/db")
     const user = await prisma.user.findFirst({where: {email}})
     return user
   } catch (error) {
@@ -43,5 +45,15 @@ const getUserByEmail = async (email: string): Promise<User | null> => {
     throw new Error("error getting user by email")
   }
 }
+const getUserById = async (id: number): Promise<User | null> => {
+  try {
+    const {prisma} = await import("../db/db")
+    const user = await prisma.user.findFirst({where: {id}})
+    return user
+  } catch (error) {
+    console.error(error)
+    throw new Error("error getting user by email")
+  }
+}
 
-export {getUsers, insertNewUser, getUserByEmail}
+export {getUsers, insertNewUser, getUserByEmail, getUserById}
