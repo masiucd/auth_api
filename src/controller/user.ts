@@ -3,6 +3,8 @@ import type {Request, Response} from "express"
 import {getUsers, insertNewUser, getUserByEmail} from "../persistence/user"
 import {validateEmail, authorize, hashPassword, loginUser} from "../biz-user"
 
+type ResponseReturnType = Promise<Response<unknown, Record<string, unknown>>>
+
 const users = async (req: Request, res: Response): ResponseReturnType => {
   try {
     const users = await getUsers()
@@ -45,19 +47,10 @@ const authorizeUser = async (req: Request, res: Response): ResponseReturnType =>
 
     const [isAuthorized, userId] = await authorize(req, user)
     if (isAuthorized) {
-      await loginUser(req, userId)
+      await loginUser(req, res, userId)
+      return res.send({message: "authorized", status: 200})
     }
-
-    // Just when developing
-    // do not use this for production!!!
-    res.cookie("test-cookie", "value", {
-      maxAge: 1000 * 60 * 60,
-      httpOnly: true,
-      path: "/",
-      domain: "localhost",
-    })
-
-    return res.send({message: "authorized", status: 200})
+    return res.send({message: "Not authorized", status: 401})
   } catch (err) {
     console.error(err)
     return res.send({error: "error authorize user", status: 500})

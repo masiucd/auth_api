@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "baseUrl": "./src",
+    "types": ["types.d.ts"],
     "paths": {
       "$root": ["."],
       "$db": ["db/*"],
