@@ -1,9 +1,11 @@
 import {User} from "@prisma/client"
 
-const getUsers = async (): Promise<User[]> => {
+type GetUser = Pick<User, "id" | "email" | "name"> | null
+
+const getUsers = async (): Promise<GetUser[]> => {
   try {
     const {prisma} = await import("../db/db")
-    return await prisma.user.findMany()
+    return await prisma.user.findMany({select: {id: true, email: true, name: true}})
   } catch (error) {
     console.error(error)
     throw new Error("error getting users")
@@ -18,7 +20,7 @@ const insertNewUser = async ({
   email: string
   hashedPassword: string
   name: string
-}): Promise<User> => {
+}): Promise<GetUser> => {
   try {
     const {prisma} = await import("../db/db")
     const user = await prisma.user.create({
@@ -27,6 +29,7 @@ const insertNewUser = async ({
         password: hashedPassword,
         name,
       },
+      select: {id: true, email: true, name: true},
     })
     return user
   } catch (error) {
@@ -38,17 +41,22 @@ const insertNewUser = async ({
 const getUserByEmail = async (email: string): Promise<User | null> => {
   try {
     const {prisma} = await import("../db/db")
-    const user = await prisma.user.findFirst({where: {email}})
+    const user = await prisma.user.findFirst({
+      where: {email},
+    })
     return user
   } catch (error) {
     console.error(error)
     throw new Error("error getting user by email")
   }
 }
-const getUserById = async (id: number): Promise<User | null> => {
+const getUserById = async (id: number): Promise<GetUser> => {
   try {
     const {prisma} = await import("../db/db")
-    const user = await prisma.user.findFirst({where: {id}})
+    const user = await prisma.user.findFirst({
+      where: {id},
+      select: {id: true, email: true, name: true},
+    })
     return user
   } catch (error) {
     console.error(error)
