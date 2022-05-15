@@ -1,11 +1,12 @@
 import {User} from "@prisma/client"
-
-type GetUser = Pick<User, "id" | "email" | "name"> | null
+import {GetUser} from "../types"
 
 const getUsers = async (): Promise<GetUser[]> => {
   try {
     const {prisma} = await import("../db/db")
-    return await prisma.user.findMany({select: {id: true, email: true, name: true}})
+    return await prisma.user.findMany({
+      select: {id: true, email: true, name: true},
+    })
   } catch (error) {
     console.error(error)
     throw new Error("error getting users")

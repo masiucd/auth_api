@@ -1,7 +1,13 @@
 import type {Request, Response} from "express"
 
 import {getUsers, insertNewUser, getUserByEmail} from "../persistence/user"
-import {validateEmail, authorize, hashPassword, loginUser, isAuthorized} from "../biz-user"
+import {
+  validateEmail,
+  authorize,
+  hashPassword,
+  loginUser,
+  isAuthorized,
+} from "../biz-user"
 
 type ResponseReturnType = Promise<Response<unknown, Record<string, unknown>>>
 
@@ -20,10 +26,12 @@ const register = async (req: Request, res: Response): ResponseReturnType => {
     const {email, password, name} = req.body
     if (!email || !password || !name) res.send({error: "missing fields"})
     const isValidEmail = validateEmail(email)
+    res.status(400)
     if (!isValidEmail) res.send({error: "invalid email", status: 400})
     // check if email exists in db
     const userByEmail = await getUserByEmail(email)
     if (userByEmail !== null) {
+      res.status(400)
       return res.json({message: "email already exists", status: 400})
     }
 
@@ -31,6 +39,7 @@ const register = async (req: Request, res: Response): ResponseReturnType => {
     const user = await insertNewUser({email, hashedPassword, name})
 
     res.header("Content-Type", "application/json")
+    res.status(200)
     return res.send({user, message: "user created", status: 200})
   } catch (error) {
     console.error(error)
@@ -38,10 +47,14 @@ const register = async (req: Request, res: Response): ResponseReturnType => {
   }
 }
 
-const authorizeUser = async (req: Request, res: Response): ResponseReturnType => {
+const authorizeUser = async (
+  req: Request,
+  res: Response
+): ResponseReturnType => {
   try {
     const user = await getUserByEmail(req.body.email)
     if (user === null) {
+      res.status(400)
       return res.send({error: "user not found", status: 400})
     }
 
@@ -50,6 +63,7 @@ const authorizeUser = async (req: Request, res: Response): ResponseReturnType =>
       await loginUser(req, res, userId)
       return res.send({message: "authorized", status: 200})
     }
+    res.status(401)
     return res.send({message: "Not authorized", status: 401})
   } catch (error) {
     console.error(error)
@@ -59,10 +73,12 @@ const authorizeUser = async (req: Request, res: Response): ResponseReturnType =>
 
 const profile = async (req: Request, res: Response): ResponseReturnType => {
   try {
-    const user = await isAuthorized(req)
+    const user = await isAuthorized(req, res)
     if (user) {
+      res.status(200)
       return res.send({user, message: `Welcome ${user.name}`, status: 200})
     }
+    res.status(401)
     return res.send({message: "Cant access the profile", status: 401})
   } catch (error) {
     console.error(error)
