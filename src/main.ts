@@ -1,7 +1,6 @@
 import express from "express"
 import {Routes} from "./routes"
 import cookieParser from "cookie-parser"
-import "module-alias/register"
 
 const app = express()
 const PORT = process.env.PORT ?? 3000

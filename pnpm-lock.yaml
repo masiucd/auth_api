@@ -19,7 +19,6 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   express: ^4.18.1
   jsonwebtoken: ^8.5.1
-  module-alias: ^2.2.2
   nodemon: ^2.0.15
   prettier: ^2.6.2
   ts-node: ^10.7.0
@@ -31,7 +30,6 @@ dependencies:
   cookie-parser: 1.4.6
   express: 4.18.1
   jsonwebtoken: 8.5.1
-  module-alias: 2.2.2
 
 devDependencies:
   '@tsconfig/node16': 1.0.2
@@ -1567,10 +1565,6 @@ packages:
   /minimist/1.2.6:
     resolution: {integrity: sha1-hjelt1nqDW6YcCz7OpKDMjyTr0Q=}
     dev: true
-
-  /module-alias/2.2.2:
-    resolution: {integrity: sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==}
-    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}

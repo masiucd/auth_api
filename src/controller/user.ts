@@ -1,5 +1,4 @@
 import type {Request, Response} from "express"
-
 import {getUsers, insertNewUser, getUserByEmail} from "../persistence/user"
 import {
   validateEmail,
@@ -7,6 +6,7 @@ import {
   hashPassword,
   loginUser,
   isAuthorized,
+  logout as logoutUser,
 } from "../biz-user"
 
 type ResponseReturnType = Promise<Response<unknown, Record<string, unknown>>>
@@ -86,4 +86,14 @@ const profile = async (req: Request, res: Response): ResponseReturnType => {
   }
 }
 
-export {users, register, authorizeUser, profile}
+const logout = async (req: Request, res: Response): ResponseReturnType => {
+  try {
+    await logoutUser(req, res)
+    return res.send({message: "logged out", status: 200}).status(200)
+  } catch (error) {
+    console.error(error)
+    return res.send({error: "error logging out", status: 500})
+  }
+}
+
+export {users, register, authorizeUser, profile, logout}
